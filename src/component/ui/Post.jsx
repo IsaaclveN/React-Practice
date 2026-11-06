@@ -28,7 +28,13 @@ export default function Post() {
         }
     }, [message, error]);
     const submit = async (e) => {
-        e.preventDefault();         
+        e.preventDefault();
+
+        if (!message.trim()) {
+            setError('Post cannot be empty');
+            return;
+        }
+
         setProcessing(true);
         setError('');
 
@@ -38,7 +44,7 @@ export default function Post() {
             setPosts((prevPost) => [newPost, ...prevPost]);
             setMessage('');
         } catch (err) {
-            const errMsg = err.response?.data.message || 'Failed to share post. Please try again';
+            const errMsg = err.response?.data?.message || 'Failed to share post. Please try again.';
             setError(errMsg);
         } finally {
             setProcessing(false);
@@ -84,7 +90,7 @@ export default function Post() {
           />
         ))
       ) : (
-        <div className="post-empty-state"></div>
+        <div className="post-empty-state">No posts shared yet.</div>
       )}
     </div>
   </div>
