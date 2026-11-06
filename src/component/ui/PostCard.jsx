@@ -14,7 +14,7 @@ export default function PostCard({ post }) {
                         {post.created_at
                             ? new Date(post.created_at).toLocaleString()
                             : 'Just now'}
-                    </small>
+                    </small>    
                 </div>
 
                 <p className="post-message">{post.message}</p>
