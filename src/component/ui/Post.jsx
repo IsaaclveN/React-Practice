@@ -27,4 +27,22 @@ export default function Post() {
 
         }
     }, [message, error]);
+    const submit = async (e) => {
+        e.preventDefault();         
+    }
+    
+    setProcessing(true);
+    setError('');
+
+    try{
+        const response = await storePost({message});
+        const newPost =response.data.data || response.data;
+        setPosts((prevPost) => [newPost, ...prevPost]);
+        setMassage('');
+    }catch (err){
+        const errMsg = err.response?.data.message || 'Failed to share post. Please try again';
+        setError(errMsg);
+    }finally{
+        setProcessing(false);
+    }
 }
